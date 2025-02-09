@@ -1,3 +1,23 @@
+fn play_with_pointers()
+{
+    println!("Hello from NIT Team!");
+    let mut line: (/*p1*/(i32, i32),
+                   /*p2*/(i32, i32)) = ((0, 0), (1, 1));
+
+    let ref_poit1 = &line.0;
+    //*ref_poit1 = (77, 77);
+
+    println!("line.0 = {:?}", line.0);
+
+    let ref_poit2 = &mut line.1;
+    //*ref_poit3 = (99, 99);
+    *ref_poit2 = (99, 99);
+
+    let mut ref_poit = &mut line.0;
+    ref_poit = &mut line.1;
+    ref_poit = &mut line.0;
+}
+
 fn find_min_max(numbers: &[i32]) -> (i32, i32) {
     let mut min = numbers[0];
     let mut max = numbers[0];
@@ -14,14 +34,7 @@ fn find_min_max(numbers: &[i32]) -> (i32, i32) {
     (min, max)
 }
 
-fn main() {
-    let numbers = [4, 2, 8, 1, 9, 3, 5];
-    let (min, max) = find_min_max(&numbers);
-    println!("Min: {}, Max: {}", min, max);
-    data_types();
-    data_types2();
-    print_star_of_asterisks();
-}
+
 
 fn print_star_of_asterisks() {
     let star = "*";
@@ -103,4 +116,14 @@ fn data_types2() {
     
     // Even with mut, we can't change type:
     //mutable_int = 42.5;     // Error: mismatched types
+}
+
+fn main() {
+    let numbers = [4, 2, 8, 1, 9, 3, 5];
+    let (min, max) = find_min_max(&numbers);
+    println!("Min: {}, Max: {}", min, max);
+    data_types();
+    data_types2();
+    print_star_of_asterisks();
+    play_with_pointers();
 }
