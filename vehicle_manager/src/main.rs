@@ -1,4 +1,3 @@
-use std::collections::HashMap;
 
 #[derive(Debug, PartialEq)]
 pub enum VehicleType {
@@ -11,7 +10,7 @@ pub enum VehicleType {
 pub struct Vehicle {
     id: u32,
     vehicle_type: VehicleType,
-    make: String,
+    producer: String,
     model: String,
     year: u32,
     mileage: f64,
@@ -25,7 +24,7 @@ pub struct VehicleManagementSystem {
 impl Vehicle {
     pub fn new(
         vehicle_type: VehicleType,
-        make: String,
+        producer: String,
         model: String,
         year: u32,
         mileage: f64,
@@ -34,7 +33,7 @@ impl Vehicle {
         Vehicle {
             id,
             vehicle_type,
-            make,
+            producer,
             model,
             year,
             mileage,
@@ -53,7 +52,7 @@ impl VehicleManagementSystem {
     pub fn add_vehicle(
         &mut self,
         vehicle_type: VehicleType,
-        make: String,
+        producer: String,
         model: String,
         year: u32,
         mileage: f64,
@@ -61,7 +60,7 @@ impl VehicleManagementSystem {
         let id = self.next_id;
         self.next_id += 1;
 
-        let vehicle = Vehicle::new(vehicle_type, make, model, year, mileage, id);
+        let vehicle = Vehicle::new(vehicle_type, producer, model, year, mileage, id);
         self.vehicles.push(vehicle);
         id
     }
@@ -79,10 +78,10 @@ impl VehicleManagementSystem {
         &self.vehicles
     }
 
-    pub fn query_by_make(&self, make: &str) -> Vec<&Vehicle> {
+    pub fn query_by_producer(&self, producer: &str) -> Vec<&Vehicle> {
         self.vehicles
             .iter()
-            .filter(|v| v.make.to_lowercase() == make.to_lowercase())
+            .filter(|v| v.producer.to_lowercase() == producer.to_lowercase())
             .collect()
     }
 
@@ -92,6 +91,14 @@ impl VehicleManagementSystem {
 
     pub fn get_vehicle_by_id(&self, id: u32) -> Option<&Vehicle> {
         self.vehicles.iter().find(|v| v.id == id)
+    }
+
+    pub fn list_all_car_ids(&self) -> Vec<u32> {
+        self.vehicles
+            .iter()
+            .filter(|v| v.vehicle_type == VehicleType::Car)
+            .map(|v| v.id)
+            .collect()
     }
 }
 
@@ -116,7 +123,7 @@ fn main() {
         25000.0,
     );
 
-    let motorcycle_id = vms.add_vehicle(
+    let _motorcycle_id = vms.add_vehicle(
         VehicleType::Motorcycle,
         String::from("Honda"),
         String::from("CBR"),
@@ -130,9 +137,9 @@ fn main() {
         println!("{:?}", vehicle);
     }
 
-    // Query vehicles by make
+    // Query vehicles by producer
     println!("\nToyota vehicles:");
-    for vehicle in vms.query_by_make("Toyota") {
+    for vehicle in vms.query_by_producer("Toyota") {
         println!("{:?}", vehicle);
     }
 
@@ -140,6 +147,11 @@ fn main() {
     println!("\nVehicles from 2020:");
     for vehicle in vms.query_by_year(2020) {
         println!("{:?}", vehicle);
+    }
+
+    // Get a vehicle by ID
+    if let Some(vehicle) = vms.get_vehicle_by_id(truck_id) {
+        println!("\nVehicle with ID {}: {:?}", truck_id, vehicle);
     }
 
     // Remove a vehicle
