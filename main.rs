@@ -127,58 +127,81 @@ fn query_by_make_year(make:String,year:i32)
 
 //TASK3-CAN PASRSER  START
 
-// enum CanMessage
-// {
-//     EngineStatus{
-//         rpm:u8,
-//         coolant_temp:u8,
-//         oil_pressure:u8  
-//     },
-//     BrakeSystem{
-//         brake_pressure:u8,
-//         abs_active:bool   
-//     },
-//     Transmission{
-//         gear_position:u8,
-//         clutch_engaged:bool
-//     },
-//     Unknown
-// };
+enum CanMessage
+{
+    EngineStatus{
+        rpm:u8,
+        coolant_temp:u8,
+        oil_pressure:u8,
+    },
+    BrakeSystem{
+        brake_pressure:u8,
+        abs_active:bool,
+    },
+    Transmission{
+        gear_position:u8,
+        clutch_engaged:bool,
+    },
+    Unknown,
+}
 
-// EngineStatus: Contains fields like rpm, coolant_temp, and oil_pressure.
-// BrakeSystem: Contains fields like brake_pressure and abs_active.
-// Transmission: Contains fields like gear_position and clutch_engaged.
+fn parse_can_message(msg:&[u8]) -> CanMessage
+{
+    println!("parse_can_message");
+       
+     match msg[0] {
+        0x01 =>
+         CanMessage:: EngineStatus{
+             rpm:msg[1],coolant_temp:msg[2],oil_pressure:msg[3]
+         },
+        0x02 =>
+         CanMessage:: BrakeSystem{
+             brake_pressure:msg[1] , abs_active: if msg[2] == 1 { true } else { false}
+         },
 
-// struct parsedmsg
-// {
-//     variant:CanMessage,
-//     es:EngineStatus,
-//     bs:BrakeSystem,
-//     ts:Transmission
-// }
+         0x03 =>
+         CanMessage:: Transmission{
+             gear_position:msg[1] , clutch_engaged:if msg[2] == 1 { true } else { false}
+         },
+        _ => CanMessage::Unknown,
+     }
+}
 
+fn process_message(canmsg:CanMessage)
+{
+    println!("process_message");
 
-// fn parse_can_message([u8:8])->parsedmsg
-// {
-//     for i in msg
-//     {
-//         println!("msg {}",i);
-//         // if i == 0x01
-//         // {
-//         //     println!("Engine Status");
-//         //     parsedmsg.type = i;
+    match canmsg  {
+            CanMessage::EngineStatus{
+                rpm,
+                coolant_temp,
+                oil_pressure,
+            } => {
+                println!("Egnine Status: rpm: {}, coolant_temp: {} , oil_pressure: {}",rpm,coolant_temp,oil_pressure);       
+            }
 
-//         // }
-//     }
-//     return 
+        CanMessage::BrakeSystem {
+            brake_pressure,
+            abs_active,
+        } =>{
+            println!("BrakeSystem: brake_pressure: {},abs_active: {}",
+               brake_pressure,abs_active);
+                }
+        CanMessage::Transmission{
+            gear_position,
+            clutch_engaged,
+        } => {
+               println!("BrakeSystem: gear_position: {},clutch_engaged {}",
+                    gear_position,clutch_engaged);         
+        }
+        CanMessage::Unknown
+                 => {
+                    println!("UNKNOWN");  
+                }
+        
+     };
 
-// }
-
-// fn process_message(msg[u8:8])
-// {
-//     println!("DO NOTHING");
-
-// }
+}
 //TASK3-CAN PASRSER  END
 fn main()
 {
@@ -237,25 +260,25 @@ fn main()
 
     //TASK3-START
 
-    // let messages = [
+    let messages = [
 
-    // [0x01, 0x1F, 0x40, 90, 45, 0, 0, 0], // EngineStatus
+    [0x01, 0x1F, 0x40, 90, 45, 0, 0, 0], // EngineStatus
 
-    // [0x02, 80, 1, 0, 0, 0, 0, 0],       // BrakeSystem
+    [0x02, 80, 1, 0, 0, 0, 0, 0],       // BrakeSystem
 
-    // [0x03, 3, 1, 0, 0, 0, 0, 0],        // Transmission
+    [0x03, 3, 1, 0, 0, 0, 0, 0],        // Transmission
 
-    // [0x04, 1, 1, 1, 1, 1, 1, 1]         // Unknown
+    [0x04, 1, 1, 1, 1, 1, 1, 1]         // Unknown
 
-    // ];
+    ];
 
-    // for msg in messages {
+    for msg in messages {
 
-    // let parsed_msg = parse_can_message(msg);
+    let parsed_msg = parse_can_message(&msg);
 
-    //     process_message(parsed_msg);
+       process_message(parsed_msg);
 
-    // }
+     }
 
 //TASK3-END
 
