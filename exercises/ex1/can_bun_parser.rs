@@ -1,4 +1,3 @@
-#[allow(dead_code)]
 enum CanMessage {
     EngineStatus {
         rpm: u8,
@@ -16,7 +15,6 @@ enum CanMessage {
     Unknown,
 }
 
-#[allow(dead_code)]
 fn parse_can_message(raw: [u8; 8]) -> CanMessage {
     match raw[0] {
         0x01 => CanMessage::EngineStatus {
@@ -36,7 +34,6 @@ fn parse_can_message(raw: [u8; 8]) -> CanMessage {
     }
 }
 
-#[allow(dead_code)]
 fn process_message(msg: CanMessage) {
     match msg {
         CanMessage::EngineStatus {

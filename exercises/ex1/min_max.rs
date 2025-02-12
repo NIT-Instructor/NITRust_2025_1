@@ -1,4 +1,3 @@
-#[allow(dead_code)]
 fn min_max(slice: &[i32]) -> (i32, i32) {
     if slice.is_empty() {
         panic!("Slice is empty");
