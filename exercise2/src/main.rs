@@ -38,6 +38,9 @@ fn log_reading(readings: &mut Vec<f32>, new_value: f32) {
 }
 
 fn get_average_temperature(readings: &Vec<f32>) -> f32 {
+    if readings.is_empty() {
+        return 0.0;
+    }
     let sum: f32 = readings.iter().sum();
     sum / readings.len() as f32
 }
@@ -61,6 +64,29 @@ impl MyString {
     }
 }
 
+// Task 4: FIFO Buffer Implementation using Vec
+struct FifoBuffer {
+    buffer: Vec<u8>,
+}
+
+impl FifoBuffer {
+    fn new() -> Self {
+        FifoBuffer { buffer: Vec::new() }
+    }
+
+    fn enqueue(&mut self, value: u8) {
+        self.buffer.push(value);
+    }
+
+    fn dequeue(&mut self) -> Option<u8> {
+        if self.buffer.is_empty() {
+            None
+        } else {
+            Some(self.buffer.remove(0))
+        }
+    }
+}
+
 fn main() {
     // Testing Task 1
     let mut car = CarStatus {
@@ -74,14 +100,14 @@ fn main() {
     car.set_speed(120);
     car.set_engine_temperature(95.0);
     car.display_status();
-
+    
     // Testing Task 2
     let mut sensor_readings: Vec<f32> = vec![25.5, 27.3, 26.8];
     println!("Average Temperature: {:.2}", get_average_temperature(&sensor_readings));
     log_reading(&mut sensor_readings, 28.1);
     log_reading(&mut sensor_readings, 29.4);
     println!("New Average Temperature: {:.2}", get_average_temperature(&sensor_readings));
-
+    
     // Testing Task 3
     let mut my_str = MyString::new();
     my_str.push('H');
@@ -90,4 +116,14 @@ fn main() {
     my_str.push('l');
     my_str.push('o');
     println!("Custom String Length: {}", my_str.len());
+    
+    // Testing Task 4: FIFO Buffer
+    let mut fifo = FifoBuffer::new();
+    fifo.enqueue(10);
+    fifo.enqueue(20);
+    fifo.enqueue(30);
+    println!("Dequeued: {:?}", fifo.dequeue());
+    println!("Dequeued: {:?}", fifo.dequeue());
+    println!("Dequeued: {:?}", fifo.dequeue());
+    println!("Dequeued: {:?}", fifo.dequeue());
 }
