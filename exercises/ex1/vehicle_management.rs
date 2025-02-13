@@ -1,4 +1,3 @@
-#[allow(dead_code)]
 #[derive(Debug)]
 enum VehicleType {
     Car,
@@ -6,7 +5,6 @@ enum VehicleType {
     Motorcycle,
 }
 
-#[allow(dead_code)]
 #[derive(Debug)]
 struct Vehicle {
     id: u32,
@@ -21,7 +19,6 @@ struct VehicleManagementSystem {
     vehicles: Vec<Vehicle>,
 }
 
-#[allow(dead_code)]
 impl VehicleManagementSystem {
     fn add_vehicle(&mut self, vehicle: Vehicle) {
         self.vehicles.push(vehicle);
@@ -39,7 +36,6 @@ impl VehicleManagementSystem {
         }
     }
 
-    #[allow(dead_code)]
     fn query_vehicles(&self, make: &str, year: u32) {
         let filtered_vehicles: Vec<&Vehicle> = self
             .vehicles
