@@ -68,11 +68,11 @@ fn main() {
 // Function that takes ownership of MyString
 fn print_string(str_to_print: MyString) {
     println!("String inside print_string: {:?}", str_to_print);
-    // s is dropped here when the function ends
+    // str_to_print is dropped here when the function ends
 }
 
 // Function that borrows a MyString
 fn print_string_ref(str_to_print: &MyString) {
     println!("String inside print_string_ref: {:?}", str_to_print);
-    // s is not dropped here
+    // str_to_print is not dropped here
 }
