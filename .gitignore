@@ -1,5 +1,5 @@
 # Compiled files
-/target/
+*/target/
 
 # Remove Cargo.lock for libraries
 # Keep it for binaries
