@@ -1,0 +1,7 @@
+[package]
+name = "exercise3"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+math_ops = { path = "./math_ops"}
