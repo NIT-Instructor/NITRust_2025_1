@@ -1,0 +1,1 @@
+/home/nayan/Drive/Code/RUST_Training/NITRust_2025_1/Module3_Exercises/Task4_Library_way/math_advanced_ops/target/debug/libmath_advanced_ops.rlib: /home/nayan/Drive/Code/RUST_Training/NITRust_2025_1/Module3_Exercises/Task4_Library_way/math_advanced_ops/lib.rs

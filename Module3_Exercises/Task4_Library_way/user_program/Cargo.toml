@@ -1,0 +1,12 @@
+[package]
+name = "user_program"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+math_basic_ops = {path = "../math_basic_ops"}
+math_advanced_ops = {path = "../math_advanced_ops"}
+
+[[bin]]
+name = "user_program"
+path = "main.rs"
