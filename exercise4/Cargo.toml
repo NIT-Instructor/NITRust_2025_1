@@ -1,0 +1,7 @@
+[package]
+name = "exercise4"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+semaphore = "0.4.0"
