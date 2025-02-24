@@ -4,6 +4,7 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
+semaphore = "0.4.0"
 
 [[bin]]
 name = "NITRust_2025_1"
